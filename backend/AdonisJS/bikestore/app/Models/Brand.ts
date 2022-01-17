@@ -2,6 +2,7 @@
 import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
 
 export default class Brand extends BaseModel {
+  public static table = 'production.brands'
   @column({ isPrimary: true })
   public brand_id: number
 
