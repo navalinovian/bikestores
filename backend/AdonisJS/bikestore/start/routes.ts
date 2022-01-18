@@ -27,4 +27,5 @@ Route.get('/', async () => {
 Route.group(()=>{
   Route.resource('/brand', 'BrandsController').apiOnly()
   Route.resource('/category', 'CategoriesController').apiOnly()
+  Route.resource('/product', 'ProductsController').apiOnly()
 }).prefix('/api');

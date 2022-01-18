@@ -1,5 +1,6 @@
 // import { DateTime } from 'luxon'
-import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, column, HasMany, hasMany } from '@ioc:Adonis/Lucid/Orm'
+import Product from './Product'
 
 export default class Brand extends BaseModel {
   public static table = 'production.brands'
@@ -14,4 +15,8 @@ export default class Brand extends BaseModel {
 
   // @column.dateTime({ autoCreate: true, autoUpdate: true })
   // public updatedAt: DateTime
+  @hasMany(()=> Product,{
+    foreignKey:'brand_id'
+  })
+  public products:HasMany<typeof Product>
 }
