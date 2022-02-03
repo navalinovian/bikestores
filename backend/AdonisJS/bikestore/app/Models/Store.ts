@@ -1,5 +1,5 @@
-import { BaseModel, column, HasMany, hasMany } from '@ioc:Adonis/Lucid/Orm'
-import Stock from './Stock'
+import { BaseModel, column, ManyToMany, manyToMany } from '@ioc:Adonis/Lucid/Orm'
+import Product from './Product'
 
 export default class Store extends BaseModel {
   public static table = 'sales.stores'
@@ -27,8 +27,13 @@ export default class Store extends BaseModel {
   @column()
   public zip_code:number
 
-  @hasMany(()=> Stock,{
-    foreignKey:'store_id'
+  @manyToMany(()=> Product,{
+    localKey:'store_id',
+    pivotForeignKey:'store_id',
+    relatedKey:'product_id',
+    pivotRelatedForeignKey:'product_id',
+    pivotColumns:['store_name'],
+    pivotTable:'production.stocks'
   })
-  public stock:HasMany<typeof Stock>
+  public stocks:ManyToMany<typeof Product>
 }

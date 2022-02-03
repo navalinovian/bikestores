@@ -1,6 +1,7 @@
-import { BaseModel, belongsTo, column, BelongsTo } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, belongsTo, column, BelongsTo, manyToMany, ManyToMany } from '@ioc:Adonis/Lucid/Orm'
 import Brand from './Brand'
 import Category from './Category'
+import Store from './Store'
 
 export default class Product extends BaseModel {
   public static table = 'production.products'
@@ -32,5 +33,13 @@ export default class Product extends BaseModel {
   @column()
   public list_price:number
 
-
+  @manyToMany(()=> Store,{
+    localKey:'product_id',
+    pivotForeignKey:'product_id',
+    relatedKey:'store_id',
+    pivotRelatedForeignKey:'store_id',
+    pivotColumns:['product_name'],
+    pivotTable:'production.stocks'
+  })
+  public stocks:ManyToMany<typeof Store>
 }

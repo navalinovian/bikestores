@@ -1,5 +1,6 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Product from 'App/Models/Product';
+import Store from 'App/Models/Store';
 export default class ProductsController {
     public async index({response}:HttpContextContract ) {
         const product = await Product.all();
@@ -11,9 +12,19 @@ export default class ProductsController {
     }
 
     public async store({request, response}: HttpContextContract) {
-        const input = request.only(['product_name','brand_id','category_id','model_year', 'list_price']);
+        const input = request.only(['product_name','brand_id','category_id',
+        'model_year', 'list_price']);
+        const extra = request.only(['stores_id','quantity'])
+        
         try{
-            const product = await Product.create(input)
+            const product = await Product.firstOrCreate(input)
+
+            await Store.findOrFail(extra.stores_id)
+            await product.related('stocks').attach({
+                [extra.stores_id]:{
+                    quantity:extra.quantity
+                }
+            })
             return response.status(201).json({
                 code:201,
                 status:'created',
