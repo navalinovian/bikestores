@@ -32,4 +32,11 @@ Route.group(()=>{
 
   Route.get('/stock/:product/:store?','StocksController.show')
   Route.post('/stock','StocksController.addStock')
+
+
+  Route.post('/register','UsersController.register')
+  Route.get('/user/index','UsersController.index')
+  Route.get('/user/:id','UsersController.show')
+  Route.patch('/user/:id','UsersController.update')
+  Route.delete('/user/:id','UsersController.destroy')
 }).prefix('/api');
