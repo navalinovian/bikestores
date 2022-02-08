@@ -10,7 +10,7 @@ export default class Products extends BaseSchema {
       table.integer('brand_id').notNullable().unsigned().references('brand_id').inTable('production.brands').onUpdate('CASCADE')
       table.integer('category_id').notNullable().unsigned().references('category_id').inTable('production.categories').onUpdate('CASCADE')
       table.integer('model_year').notNullable()
-      table.decimal('list_price',2)
+      table.decimal('list_price',10,2)
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
        */
