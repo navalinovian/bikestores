@@ -51,7 +51,7 @@ const authConfig: AuthConfig = {
       tokenProvider: {
         type: 'api',
         driver: 'database',
-        table: 'api_tokens',
+        table: 'user.api_tokens',
         foreignKey: 'user_id',
       },
 
@@ -75,7 +75,7 @@ const authConfig: AuthConfig = {
         | the primary key is the right choice.
         |
         */
-        identifierKey: 'id',
+        identifierKey: 'user_id',
 
         /*
         |--------------------------------------------------------------------------
@@ -87,7 +87,7 @@ const authConfig: AuthConfig = {
         | of the mentioned columns to find their user record.
         |
         */
-        uids: ['username','email'],
+        uids: ['email'],
 
         /*
         |--------------------------------------------------------------------------

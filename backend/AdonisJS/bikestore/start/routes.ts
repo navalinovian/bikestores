@@ -39,4 +39,6 @@ Route.group(()=>{
   Route.get('/user/:id','UsersController.show')
   Route.patch('/user/:id','UsersController.update')
   Route.delete('/user/:id','UsersController.destroy')
+
+  Route.post('/login','AuthController.login')
 }).prefix('/api');
