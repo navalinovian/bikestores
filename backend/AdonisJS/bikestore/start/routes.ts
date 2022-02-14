@@ -35,10 +35,13 @@ Route.group(()=>{
 
 
   Route.post('/register','UsersController.register')
-  Route.get('/user/index','UsersController.index')
-  Route.get('/user/:id','UsersController.show')
+  Route.get('/user/index','UsersController.index').middleware('auth:api')
+  Route.get('/user/:id','UsersController.show').middleware('auth:api')
   Route.patch('/user/:id','UsersController.update')
   Route.delete('/user/:id','UsersController.destroy')
 
   Route.post('/login','AuthController.login')
+
+  Route.post('/customer','CustomersController.store')
+  Route.get('/customer/:id','CustomersController.show').middleware('auth:api')
 }).prefix('/api');
