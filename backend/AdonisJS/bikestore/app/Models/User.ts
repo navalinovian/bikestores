@@ -2,7 +2,6 @@ import { DateTime } from 'luxon'
 import { BaseModel, beforeFetch, beforeFind, beforeSave, column } from '@ioc:Adonis/Lucid/Orm'
 import Hash from '@ioc:Adonis/Core/Hash'
 import { softDelete, softDeleteQuery } from 'App/Services/SoftDelete'
-
 export default class User extends BaseModel {
   public static table = 'user.users'
   @column({ isPrimary: true })

@@ -1,15 +1,34 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Customer from 'App/Models/Customer';
+import Staff from 'App/Models/Staff';
 import User from 'App/Models/User';
 
 export default class CustomersController {
-    public async index({response}:HttpContextContract ) {
-        const customer = await Customer.all();
-        return response.status(200)
-        .json({code:200,
-            statu:'success',
-            data:customer
-        });
+    public async index({response, auth}:HttpContextContract ) {
+        try {
+            const manager = await Staff.findByOrFail('user_id', auth.user?.user_id)
+            console.log(auth.user?.user_id);
+            
+            if (manager.manager_id == null) {
+                const customer = await Customer.all();
+                return response.status(200)
+                .json({
+                    code:200,
+                    statu:'success',
+                    data:customer
+                });        
+            }else{
+                throw new Error("AUTHORIZATION ERROR")
+                
+            }
+        } catch (err) {
+            return response.status(500).json({
+                code:500,
+                status:'error',
+                message:err.message
+            });
+        }
+        
     }
 
     public async store({request, response}: HttpContextContract) {
@@ -43,13 +62,8 @@ export default class CustomersController {
         }
     }
 
-    public async show({response, params, auth, bouncer}:HttpContextContract) {
-        try {
-            const user = await auth.use('api').user
-
-            
-            console.log(user);
-            
+    public async show({response, params, bouncer}:HttpContextContract) {
+        try {    
             const customer = await Customer.findByOrFail('customer_id',params.id);
 
             await bouncer.authorize('viewBalance', customer)
