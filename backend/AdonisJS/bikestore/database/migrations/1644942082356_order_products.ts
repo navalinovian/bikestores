@@ -1,6 +1,6 @@
 import BaseSchema from '@ioc:Adonis/Lucid/Schema'
 
-export default class OrderItems extends BaseSchema {
+export default class OrderProducts extends BaseSchema {
   protected tableName = 'sales.order_products'
 
   public async up () {
