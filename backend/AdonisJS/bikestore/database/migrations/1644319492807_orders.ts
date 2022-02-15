@@ -9,12 +9,12 @@ export default class Orders extends BaseSchema {
       table.integer('customer_id').unsigned().references('customer_id').inTable('sales.customers').onUpdate('CASCADE').onDelete('CASCADE')
       table.integer('store_id').notNullable().unsigned().references('store_id').inTable('sales.stores').onUpdate('CASCADE').onDelete('CASCADE')
       table.integer('staff_id').notNullable().unsigned().references('staff_id').inTable('sales.staffs').onUpdate('NO ACTION').onDelete('NO ACTION')
-      table.tinyint('order_status')
-      table.date('order_date').notNullable()
+      table.tinyint('order_status').defaultTo(1)
       table.date('required_date').notNullable()
       table.date('shipped_date').nullable()
-      table.timestamp('created_at', { useTz: true }).defaultTo(this.now())
+      table.timestamp('order_date', { useTz: true }).defaultTo(this.now())
       table.timestamp('updated_at', { useTz: true })
+      table.timestamp('deleted_at', { useTz: true })
     })
   }
 
