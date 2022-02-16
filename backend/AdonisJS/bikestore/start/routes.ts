@@ -44,4 +44,8 @@ Route.group(()=>{
 
   Route.post('/customer','CustomersController.store')
   Route.get('/customer/:id','CustomersController.show').middleware('auth:api')
+  Route.get('/customer','CustomersController.index').middleware('auth:api')
+
+  Route.get('/order', 'OrdersController.index').middleware('auth:api')
+  Route.post('/order', 'OrdersController.store').middleware('auth:api')
 }).prefix('/api');

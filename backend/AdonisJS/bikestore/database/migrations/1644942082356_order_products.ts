@@ -1,11 +1,11 @@
 import BaseSchema from '@ioc:Adonis/Lucid/Schema'
 
-export default class OrderItems extends BaseSchema {
-  protected tableName = 'sales.order_items'
+export default class OrderProducts extends BaseSchema {
+  protected tableName = 'sales.order_products'
 
   public async up () {
     this.schema.createTable(this.tableName, (table) => {
-      table.increments('item_id').primary()
+      table.increments('order_product_id').primary()
       table.integer('order_id').unsigned().references('order_id').inTable('sales.orders').onUpdate('CASCADE').onDelete('CASCADE')
       table.integer('product_id').notNullable().unsigned().references('product_id').inTable('production.products').onUpdate('CASCADE').onDelete('CASCADE')
       table.integer('quantity').notNullable()

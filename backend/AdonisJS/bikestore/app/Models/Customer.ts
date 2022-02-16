@@ -10,6 +10,9 @@ export default class Customer extends BaseModel {
   @column()
   public user_id: number
 
+  @belongsTo(()=> User)
+  public user: BelongsTo<typeof User>
+
   @column()
   public balance: number
 
@@ -22,6 +25,5 @@ export default class Customer extends BaseModel {
   @column.dateTime({ serializeAs:null})
   public deletedAt: DateTime
 
-  @belongsTo(()=> User)
-  public user: BelongsTo<typeof User>
+  
 }

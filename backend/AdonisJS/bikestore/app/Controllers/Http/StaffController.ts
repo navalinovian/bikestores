@@ -1,49 +1,32 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import Customer from 'App/Models/Customer';
 import Staff from 'App/Models/Staff';
 import User from 'App/Models/User';
 
-export default class CustomersController {
-    public async index({response, auth}:HttpContextContract ) {
-        try {
-            const manager = await Staff.findByOrFail('user_id', auth.user?.user_id)
-            console.log(auth.user?.user_id);
-            
-            if (manager.manager_id == null) {
-                const customer = await Customer.all();
-                return response.status(200)
-                .json({
-                    code:200,
-                    statu:'success',
-                    data:customer
-                });        
-            }else{
-                throw new Error("AUTHORIZATION ERROR")
-                
-            }
-        } catch (err) {
-            return response.status(500).json({
-                code:500,
-                status:'error',
-                message:err.message
-            });
-        }
-        
+export default class StaffController {
+    public async index({response}:HttpContextContract ) {
+        const staff = await Staff.all();
+        return response.status(200)
+        .json({code:200,
+            statu:'success',
+            data:staff
+        });
     }
 
     public async store({request, response}: HttpContextContract) {
-        const input = request.only(['first_name','last_name','username','password','phone','email','street', 'city', 'state', 'zip_code']);
+        const input = request.only(['first_name','last_name','username',
+                    'password','phone','email','street', 'city', 'state',
+                    'zip_code', 'store_id', 'manager_id']);
         try{
             const user = await User.create(input)
             const user_id = user.user_id
             try {
-                const customer = await Customer.create({
+                const staff = await Staff.create({
                     user_id: user_id
                 })
                 return response.status(201).json({
                     code:201,
                     status:'created',
-                    data:customer
+                    data:staff
                 });  
             } catch (err) {
                 await user.delete()
@@ -62,15 +45,18 @@ export default class CustomersController {
         }
     }
 
-    public async show({response, params, bouncer}:HttpContextContract) {
-        try {    
-            const customer = await Customer.findByOrFail('customer_id',params.id);
+    public async show({response, params, auth}:HttpContextContract) {
+        try {
+            const user = await auth.use('api').user
 
-            await bouncer.authorize('viewBalance', customer)
+            
+            console.log(user);
+            
+            const staff = await Staff.findByOrFail('staff_id',params.id);
             return response.status(200).json({
                 code:200,
                 status:'success',
-                data:customer
+                data:staff
             })
         } catch (err) {
             return response.status(404).json({
@@ -83,16 +69,16 @@ export default class CustomersController {
     }
 
     public async update({request, response, params}:HttpContextContract) {
-        const input = request.only(['balance'])
+        const input = request.only(['store_id', 'manager_id'])
         try {
-            const customer = await Customer.findByOrFail('customer_id',params.id);
-            customer?.merge(input);
-            await customer?.save();
+            const staff = await Staff.findByOrFail('staff_id',params.id);
+            staff?.merge(input);
+            await staff?.save();
 
             return response.status(200).json({
                 code:200,
                 status:'success',
-                data:customer
+                data:staff
             });
         } catch (err) {
             return response.status(500).json({
@@ -106,13 +92,13 @@ export default class CustomersController {
 
     public async destroy({response, params}:HttpContextContract) {
         try {
-            const customer = await Customer.findByOrFail('customer_id', params.id);
-            await customer?.delete();
+            const staff = await Staff.findByOrFail('staff_id', params.id);
+            await staff?.delete();
 
             return response.status(200).json({
                 code:200,
                 status:'success',
-                data:customer
+                data:staff
             });
         } catch (err) {
             return response.status(500).json({

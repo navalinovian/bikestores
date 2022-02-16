@@ -12,6 +12,7 @@ export default class Stores extends BaseSchema {
       table.string('street')
       table.string('city',50)
       table.string('state',50)
+      table.string('zip_code',5)
       table.timestamp('created_at', { useTz: true }).defaultTo(this.now())
       table.timestamp('updated_at', { useTz: true })
       table.timestamp('deleted_at', { useTz: true })
