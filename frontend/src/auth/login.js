@@ -15,7 +15,7 @@ class login extends Component {
         this.setState({ [event.target.name]: event.target.value });
     }
     
-    handleSubmit = event => {
+    handleSubmit = (event) => {
         console.log('MASUK');
         event.preventDefault();
 
@@ -23,8 +23,10 @@ class login extends Component {
             email: this.state.email,
             password: this.state.password
         };
-        
-        axios.post(process.env.REACT_APP_DOMAIN+'login', { auth })
+
+        console.log(auth);
+        axios.defaults.headers.post['Content-Type'] ='application/x-www-form-urlencoded';
+        axios.post('http://localhost:3000/api/login', auth)
             .then(res => {
             console.log(res);
             console.log(res.data);

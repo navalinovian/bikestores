@@ -24,10 +24,10 @@ function App() {
                         <div className="collapse navbar-collapse" id="navbarResponsive">
                             <ul className="navbar-nav ms-auto">
                                 <li className="nav-item">
-                                    <a className="nav-link"><Link to='/signup'>Sign Up</Link></a>
+                                    <Link className="nav-link" to='/signup'>Sign Up</Link>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link"><Link to='/login'>Log In</Link></a>
+                                    <Link className="nav-link" to='/login'>Log In</Link>
                                 </li>
                             </ul>
                         </div>
