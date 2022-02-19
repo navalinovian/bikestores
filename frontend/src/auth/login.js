@@ -1,6 +1,36 @@
 import React, { Component } from 'react';
-
+import axios from 'axios';
 class login extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state={
+            email:'',
+            password:'',
+
+        }
+    }
+
+    handleChange = event => {
+        this.setState({ [event.target.name]: event.target.value });
+    }
+    
+    handleSubmit = event => {
+        console.log('MASUK');
+        event.preventDefault();
+
+        const auth = {
+            email: this.state.email,
+            password: this.state.password
+        };
+        
+        axios.post(process.env.REACT_APP_DOMAIN+'login', { auth })
+            .then(res => {
+            console.log(res);
+            console.log(res.data);
+            })
+    }
+    
     render() {
         return (
             <div>
@@ -18,15 +48,15 @@ class login extends Component {
                                                 <div className="text-center">
                                                     <h1 className="h4 text-gray-900 mb-4">Welcome Back!</h1>
                                                 </div>
-                                                <form className="user">
+                                                <form className="user" onSubmit={this.handleSubmit}>
                                                     <div className="form-group">
-                                                        <input type="email" className="form-control form-control-user"
-                                                            id="exampleInputEmail" aria-describedby="emailHelp"
+                                                        <input type="email" name='email' onChange={this.handleChange} className="form-control form-control-user"
+                                                            id="email" aria-describedby="emailHelp"
                                                             placeholder="Enter Email Address..." />
                                                     </div>
                                                     <div className="form-group">
                                                         <input type="password" className="form-control form-control-user"
-                                                            id="exampleInputPassword" placeholder="Password" />
+                                                            id="password" name='password' onChange={this.handleChange} placeholder="Password" />
                                                     </div>
                                                     <div className="form-group">
                                                         <div className="custom-control custom-checkbox small">
@@ -35,9 +65,7 @@ class login extends Component {
                                                                 Me</label>
                                                         </div>
                                                     </div>
-                                                    <a href="index.html" className="btn btn-primary btn-user btn-block">
-                                                        Login
-                                                    </a>
+                                                    <button className="btn btn-primary btn-user btn-block" type="submit"> Login</button>
                                                     <hr />
                                                     <a href="index.html" className="btn btn-google btn-user btn-block">
                                                         <i className="fab fa-google fa-fw"></i> Login with Google
