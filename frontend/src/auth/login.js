@@ -26,10 +26,10 @@ class login extends Component {
 
         console.log(auth);
         axios.defaults.headers.post['Content-Type'] ='application/x-www-form-urlencoded';
-        axios.post('http://localhost:3000/api/login', auth)
-            .then(res => {
-            console.log(res);
-            console.log(res.data);
+        axios.post('/login', auth)
+            .then((res) => {
+            document.cookie = "token=" + res.data.token
+            console.log(res, document.cookie);
             })
     }
     
