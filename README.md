@@ -1,2 +1,2 @@
 # BikeStores
-This App was built with Codeigniter as a Backend and ReactJS as Frontend
+This App was built with AdonisJS as a Backend and ReactJS as Frontend
