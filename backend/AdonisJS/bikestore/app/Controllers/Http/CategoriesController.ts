@@ -2,7 +2,7 @@ import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Category from 'App/Models/Category';
 
 export default class CategoriesController {
-    public async index({response}:HttpContextContract ) {
+    public async index({response,}:HttpContextContract ) {
         const category = await Category.all();
         return response.status(200)
         .json({code:200,
