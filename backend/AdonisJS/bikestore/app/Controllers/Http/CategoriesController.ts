@@ -6,7 +6,7 @@ export default class CategoriesController {
         const category = await Category.all();
         return response.status(200)
         .json({code:200,
-            statu:'success',
+            status:'success',
             data:category
         });
     }

@@ -25,6 +25,8 @@ Route.get('/', async () => {
 })
 
 Route.group(()=>{
+  Route.get('/', ()=>{return 'API Connected'})
+  
   Route.resource('/brand', 'BrandsController').apiOnly()
   Route.resource('/category', 'CategoriesController').apiOnly()
   Route.resource('/product', 'ProductsController').apiOnly()
