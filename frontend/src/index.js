@@ -2,7 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import Login from './auth/login'
+import Login from './components/auth/login'
+import Register from './components/auth/register';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter, Route, Routes} from 'react-router-dom'
 
@@ -11,8 +12,8 @@ ReactDOM.render(
   <BrowserRouter>
   <Routes>
       <Route path="/" element={<App />} />
-      <Route path="login" element={<Login />} />
-      {/* <Route path="invoices" element={<Invoices />} /> */}
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
     </Routes>
   </BrowserRouter>,
   rootElement
