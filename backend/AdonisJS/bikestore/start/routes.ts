@@ -36,7 +36,7 @@ Route.group(()=>{
   Route.post('/stock','StocksController.addStock')
 
 
-  Route.post('/register','UsersController.register')
+  // Route.post('/register','UsersController.register')
   Route.get('/user/index','UsersController.index').middleware('auth:api')
   Route.get('/user/:id','UsersController.show').middleware('auth:api')
   Route.patch('/user/:id','UsersController.update')
@@ -44,10 +44,12 @@ Route.group(()=>{
 
   Route.post('/login','AuthController.login')
 
-  Route.post('/customer','CustomersController.store')
+  Route.post('/register','CustomerController.store')
   Route.get('/customer/:id','CustomersController.show').middleware('auth:api')
   Route.get('/customer','CustomersController.index').middleware('auth:api')
 
   Route.get('/order', 'OrdersController.index').middleware('auth:api')
   Route.post('/order', 'OrdersController.store').middleware('auth:api')
+
+  Route.post('/order-product', 'OrderProductsController.store')
 }).prefix('/api');

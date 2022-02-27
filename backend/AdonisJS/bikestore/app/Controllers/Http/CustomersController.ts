@@ -7,7 +7,7 @@ export default class CustomersController {
     public async index({response, auth}:HttpContextContract ) {
         try {
             const manager = await Staff.findByOrFail('user_id', auth.user?.user_id)
-            console.log(auth.user?.user_id);
+            console.log(manager.manager_id);
             
             if (manager.manager_id == null) {
                 const customer = await Customer.all();
