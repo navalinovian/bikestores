@@ -2,19 +2,34 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import Login from './components/auth/login'
-import Register from './components/auth/register';
+import Login from './components/auth/Login'
+import Register from './components/auth/Register';
 import reportWebVitals from './reportWebVitals';
-import {BrowserRouter, Route, Routes} from 'react-router-dom'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import AdminIndex from './components/admin/AdminIndex';
+import Layout from './components/Layout';
+import NotFound from './components/NotFound';
+import RequireAuth from './components/RequireAuth';
+import { AuthProvider } from './components/AuthContext';
 
 const rootElement = document.getElementById("root");
 ReactDOM.render(
   <BrowserRouter>
-  <Routes>
-      <Route path="/" element={<App />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
-    </Routes>
+    <AuthProvider>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route path="/" element={<App />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Register />} />
+
+          <Route element={<RequireAuth />}>
+            <Route path="/admin" element={<AdminIndex />} />
+          </Route>
+
+          <Route path="*" element={<NotFound />} />
+        </Route>
+      </Routes>
+    </AuthProvider>
   </BrowserRouter>,
   rootElement
 );
