@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import './login.css'
 
 function Register() {
     const navigate = useNavigate()
@@ -81,25 +82,25 @@ function Register() {
                                         <div class="form-group row">
                                             <div class="col-sm-3 mb-3 mb-sm-0">
                                                 <input type="text" class="form-control form-control-user"  name="firstName"
-                                                    placeholder="First Name" onChange={handleChange} value={firstName}/>
+                                                    placeholder="First Name" onChange={handleChange} value={firstName} required/>
                                             </div>
                                             <div class="col-sm-6">
                                                 <input type="text" class="form-control form-control-user" name="lastName"
-                                                    placeholder="Last Name" onChange={handleChange} value={lastName} />
+                                                    placeholder="Last Name" onChange={handleChange} value={lastName} required/>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <input type="email" class="form-control form-control-user" name="email"
-                                                placeholder="Email Address" onChange={handleChange} value={email} />
+                                                placeholder="Email Address" onChange={handleChange} value={email} required/>
                                         </div>
                                         <div class="form-group">
                                             <input type="text" class="form-control form-control-user" name="username"
-                                                placeholder="Username" onChange={handleChange} value={username}/>
+                                                placeholder="Username" onChange={handleChange} value={username} required/>
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-sm-6 mb-3 mb-sm-0">
                                                 <input type="password" class="form-control form-control-user"
-                                                    name="password" placeholder="Password" onChange={handleChange} value={password}/>
+                                                    name="password" placeholder="Password" onChange={handleChange} value={password} required/>
                                             </div>
                                             <div class="col-sm-6">
                                                 <input type="password" class="form-control form-control-user"

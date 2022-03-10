@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './login.css'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+import useAuth from '../useAuth';
 
-function Login() {
-	const navigate = useNavigate()
+const Login = () => {
+	const { auth, setAuth } = useAuth();
+	const location = useLocation();
+	const navigate = useNavigate();
+	const from = location.state?.from?.pathname || "/";
+
 	const [userCredentials, setUserCredential] = useState({
 		email: '',
 		password: '',
-		auth:false,
 	});
 
 	const handleChange = (event) => {
@@ -22,28 +26,39 @@ function Login() {
 	}
 
 	const handleSubmit = async (event) => {
-		event.preventDefault();
-		const auth = {
-			email: userCredentials.email,
-			password: userCredentials.password
+		try {
+			event.preventDefault();
+			const credentials = {
+				email: userCredentials.email,
+				password: userCredentials.password
+			}
+			axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+
+			const response = await axios.post('/login', credentials)
+			// console.log(response.data);
+			const token = response?.data?.token.token
+			const user = response?.data?.user
+			axios.defaults.headers.common = { 'Authorization': `Bearer ${token}` };
+			const staff = await axios.get('/isStaff')
+			const staffdata = staff?.data?.data
+			console.log(staffdata);
+			setAuth({ user, token, staffdata });
+			navigate(from, { replace: true });
+			console.log('complete');
+		} catch (error) {
+			console.log(error.message);
 		}
-		console.log(auth);
-		axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
-		axios.post('/login', auth).then((res) => {
-			axios.defaults.headers.common = { 'Authorization': `Bearer ${res.data.token}` }
-			setUserCredential({...userCredentials, auth:true});
-			navigate('/')
-		}).catch((error) => {
-			console.log('this', error.response)
-		});
-	}
+
+	};
+
 
 	useEffect(() => {
-	  console.log('Auth:', userCredentials.auth)
-	})
-	
+		sessionStorage.setItem('auth',JSON.stringify(auth) )
+		console.log(auth);
+		console.log('sessionstorage', sessionStorage.getItem('auth'))	
+	}, [auth]);
 
-	const {email,password} = userCredentials;
+	const { email, password } = userCredentials;
 	return (
 		<div className="container">
 			{/* <!-- Outer Row --> */}
