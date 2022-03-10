@@ -44,9 +44,11 @@ Route.group(()=>{
 
   Route.post('/login','AuthController.login')
 
-  Route.post('/register','CustomerController.store')
+  Route.post('/register','CustomersController.store')
   Route.get('/customer/:id','CustomersController.show').middleware('auth:api')
   Route.get('/customer','CustomersController.index').middleware('auth:api')
+
+  Route.get('/isStaff/','StaffController.isStaff').middleware('auth:api')
 
   Route.get('/order', 'OrdersController.index').middleware('auth:api')
   Route.post('/order', 'OrdersController.store').middleware('auth:api')

@@ -12,7 +12,13 @@ export default class AuthController {
       
       if (await Hash.verify(user.password, password)) {
         const token = await auth.use('api').generate(user);
-        return token.toJSON();
+        
+        return response.status(200).json({
+          code:200,
+          status:'success',
+          user: user,
+          token:token
+        })
       }
     } catch(err) {
       return response

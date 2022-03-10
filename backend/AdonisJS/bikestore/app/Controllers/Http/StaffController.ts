@@ -45,14 +45,9 @@ export default class StaffController {
         }
     }
 
-    public async show({response, params, auth}:HttpContextContract) {
+    public async show({response, params}:HttpContextContract) {
         try {
-            const user = await auth.use('api').user
-
-            
-            console.log(user);
-            
-            const staff = await Staff.findByOrFail('staff_id',params.id);
+            const staff = await Staff.findByOrFail('user_id',params.id);
             return response.status(200).json({
                 code:200,
                 status:'success',
@@ -63,6 +58,24 @@ export default class StaffController {
                 code:404,
                 status:'error',
                 message:err.message
+            })
+        }
+         
+    }
+
+    public async isStaff({response, auth}:HttpContextContract) {
+        try {
+            const staff = await Staff.findByOrFail('user_id',auth.user?.user_id);
+            return response.status(201).json({
+                code:201,
+                status:'success',
+                data:staff
+            })
+        } catch (err) {
+            return response.status(200).json({
+                code:404,
+                status:'error',
+                data:null
             })
         }
          
