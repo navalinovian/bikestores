@@ -25,7 +25,7 @@ const Header = (data) => {
                                 <li className="nav-item">
                                     <Link className="nav-link" to='/signup'>Sign Up</Link>
                                 </li>
-                                {data.data.staffdata ?
+                                {data.data?.staffdata ?
                                     <li className="nav-item dropdown">
                                         <a className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                             {data.data.user.first_name}

@@ -5,7 +5,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import useAuth from '../useAuth';
 
 const Login = () => {
-	const { setAuth } = useAuth();
+	const { auth, setAuth } = useAuth();
 	const location = useLocation();
 	const navigate = useNavigate();
 	const from = location.state?.from?.pathname || "/";
@@ -28,20 +28,20 @@ const Login = () => {
 	const handleSubmit = async (event) => {
 		try {
 			event.preventDefault();
-			const auth = {
+			const credentials = {
 				email: userCredentials.email,
 				password: userCredentials.password
 			}
 			axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
-			const response = await axios.post('/login', auth)
+			const response = await axios.post('/login', credentials)
 			// console.log(response.data);
 			const token = response?.data?.token.token
 			const user = response?.data?.user
 			axios.defaults.headers.common = { 'Authorization': `Bearer ${token}` };
-
 			const staff = await axios.get('/isStaff')
 			const staffdata = staff?.data?.data
+			console.log(staffdata);
 			setAuth({ user, token, staffdata });
 			navigate(from, { replace: true });
 			console.log('complete');
@@ -51,9 +51,12 @@ const Login = () => {
 
 	};
 
+
 	useEffect(() => {
-		console.log("change");
-	});
+		sessionStorage.setItem('auth',JSON.stringify(auth) )
+		console.log(auth);
+		console.log('sessionstorage', sessionStorage.getItem('auth'))	
+	}, [auth]);
 
 	const { email, password } = userCredentials;
 	return (
